@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Account Login</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous">
+
+    <style>
+        body {
+            background-color: #f8f9fa; /* Light grey background for the page */
+            display: flex; /* Use flexbox for centering */
+            justify-content: center; /* Center horizontally */
+            align-items: center; /* Center vertically */
+            min-height: 100vh; /* Full viewport height */
+            margin: 0; /* Remove default body margin */
+        }
+
+        .login-card {
+            max-width: 400px;
+            width: 90%; /* Make it slightly responsive */
+            padding: 30px; /* Increased padding */
+            border: none; /* Remove default border */
+            border-radius: 15px; /* More rounded corners */
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1); /* Softer, larger shadow */
+            background-color: #ffffff; /* White background for the card */
+            text-align: center; /* Center text within the card */
+        }
+
+        .login-card .card-title {
+            font-size: 2.2rem; /* Larger title */
+            font-weight: 700; /* Bolder title */
+            color: #495057; /* Darker grey for title */
+            margin-bottom: 30px; /* More space below title */
+        }
+
+        .login-card .form-label {
+            font-weight: 600; /* Slightly bolder labels */
+            color: #6c757d; /* Medium grey for labels */
+            text-align: left; /* Align labels to the left */
+            display: block; /* Make labels block elements for alignment */
+            margin-bottom: 8px;
+        }
+
+        .login-card .form-control {
+            border-radius: 8px; /* Slightly rounded input fields */
+            padding: 12px 15px; /* More padding inside inputs */
+            border: 1px solid #ced4da; /* Light grey border */
+            transition: all 0.3s ease; /* Smooth transition for focus effect */
+        }
+
+        .login-card .form-control:focus {
+            border-color: #80bdff; /* Bootstrap's primary color for focus */
+            box-shadow: 0 0 0 0.25rem rgba(0, 123, 255, 0.25); /* Lighter shadow on focus */
+            outline: none; /* Remove default outline */
+        }
+
+        .login-card .btn-primary {
+            background-color: #43A047; /* Bootstrap primary blue */
+            border-color: #43A047; /* Matching border color */
+            border-radius: 8px; /* Rounded button */
+            padding: 12px 25px; /* More padding for a larger button */
+            font-size: 1.1rem; /* Larger font size for the button */
+            font-weight: 600; /* Bolder button text */
+            margin-top: 25px; /* Space above the button */
+            width: 100%; /* Make button full width */
+            transition: background-color 0.3s ease, transform 0.2s ease; /* Smooth transition for hover */
+        }
+
+        .login-card .btn-primary:hover {
+            background-color: #43A047; /* Darker blue on hover */
+            border-color: #43A047;
+            transform: translateY(-2px); /* Slight lift on hover */
+        }
+
+        .login-card a {
+            color: #43A047; /* Bootstrap primary blue for link */
+            text-decoration: none; /* Remove underline */
+            font-size: 0.95rem;
+            margin-top: 15px;
+            display: inline-block; /* Treat as block to control margin */
+            transition: color 0.3s ease; /* Smooth transition for link hover */
+        }
+
+        .login-card a:hover {
+            color: #43A047; /* Darker blue on hover */
+            text-decoration: underline; /* Underline on hover */
+        }
+
+        .mb-3 {
+            margin-bottom: 20px !important; /* Adjust margin for more spacing between fields */
+        }
+    </style>
+
+</head>
+<body>
+
+    <form class="card login-card" method="post" action="/api/login">
+        <h2 class="card-title text-center">Welcome Back!</h2>
+        <div class="mb-3">
+            <label for="username" class="form-label">Email address</label>
+            <input type="email" class="form-control" id="username" name="username" aria-describedby="emailHelp" placeholder="your.email@example.com">
+        </div>
+        <div class="mb-3">
+            <label for="password" class="form-label">Password</label>
+            <input type="password" class="form-control" id="password" name="password" placeholder="••••••••">
+        </div>
+        <div><a href="/register">Don't have an account? **Register here**</a></div>
+        <button type="submit" class="btn btn-primary">Login to your account</button>
+    </form>
+
+
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.min.js" integrity="sha384-7qAoOXltbVP82dhxHAUje59V5r2YsVfBafyUDxEdApLPmcdhBPg1DKg1ERo0BZlK" crossorigin="anonymous"></script>
+</body>
+</html>

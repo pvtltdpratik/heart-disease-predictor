@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Medical Data Input Form</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous">
+    <style>
+        body {
+            background-color: #f8f9fa;
+            /* Light grey background */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        .data-card {
+            max-width: 600px;
+            /* Wider card for more fields */
+            width: 90%;
+            padding: 40px;
+            border: none;
+            border-radius: 15px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+            background-color: #ffffff;
+            text-align: center;
+        }
+
+        .data-card .card-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #007bff;
+            /* Bootstrap primary blue for title */
+            margin-bottom: 35px;
+        }
+
+        .data-card .form-label {
+            font-weight: 600;
+            color: #495057;
+            text-align: left;
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        .data-card .form-control,
+        .data-card .form-select {
+            border-radius: 8px;
+            padding: 12px 15px;
+            border: 1px solid #ced4da;
+            transition: all 0.3s ease;
+        }
+
+        .data-card .form-control:focus,
+        .data-card .form-select:focus {
+            border-color: #80bdff;
+            box-shadow: 0 0 0 0.25rem rgba(0, 123, 255, 0.25);
+            outline: none;
+        }
+
+        .data-card .btn-primary {
+            background-color: #007bff;
+            border-color: #007bff;
+            border-radius: 8px;
+            padding: 12px 25px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-top: 30px;
+            width: 100%;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+
+        .data-card .btn-primary:hover {
+            background-color: #0056b3;
+            border-color: #0056b3;
+            transform: translateY(-2px);
+        }
+
+        .mb-3 {
+            margin-bottom: 20px !important;
+        }
+
+        .row {
+            margin-bottom: 20px;
+            /* Spacing between rows */
+        }
+    </style>
+</head>
+
+<body>
+
+    <form class="card data-card" method="post" action="/api/predict_api">
+        <h2 class="card-title text-center">Medical Data Input</h2>
+
+        <div class="row">
+            <div class="col-md-6 mb-3">
+                <label for="age" class="form-label">Age (years)</label>
+                <input type="number" class="form-control" id="age" name="age" min="0" max="120" placeholder="e.g., 55"
+                    required>
+            </div>
+            <div class="col-md-6 mb-3">
+                <label for="sex" class="form-label">Sex</label>
+                <select class="form-select" id="sex" name="gender" required>
+                    <option value="" disabled selected>Select Gender</option>
+                    <option value="1">Male</option>
+                    <option value="0">Female</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6 mb-3">
+                <label for="cp" class="form-label">Chest Pain Type (CP)</label>
+                <select class="form-select" id="cp" name="cp" required>
+                    <option value="" disabled selected>Select CP Type</option>
+                    <option value="0">Typical Angina</option>
+                    <option value="1">Atypical Angina</option>
+                    <option value="2">Non-Anginal Pain</option>
+                    <option value="3">Asymptomatic</option>
+                </select>
+            </div>
+            <div class="col-md-6 mb-3">
+                <label for="trestbps" class="form-label">Resting Blood Pressure (mm Hg)</label>
+                <input type="number" class="form-control" id="trestbps" name="trestbps" min="80" max="200"
+                    placeholder="e.g., 120" required>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6 mb-3">
+                <label for="chol" class="form-label">Serum Cholestoral (mg/dl)</label>
+                <input type="number" class="form-control" id="chol" name="chol" min="100" max="600"
+                    placeholder="e.g., 240" required>
+            </div>
+            <div class="col-md-6 mb-3">
+                <label for="fbs" class="form-label">Fasting Blood Sugar > 120 mg/dl?</label>
+                <select class="form-select" id="fbs" name="fbs" required>
+                    <option value="" disabled selected>Select Yes/No</option>
+                    <option value="1">Yes</option>
+                    <option value="0">No</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6 mb-3">
+                <label for="restecg" class="form-label">Resting Electrocardiographic Results (RestECG)</label>
+                <select class="form-select" id="restecg" name="restecg" required>
+                    <option value="" disabled selected>Select Result</option>
+                    <option value="0">Normal</option>
+                    <option value="1">ST-T wave abnormality</option>
+                    <option value="2">Left ventricular hypertrophy</option>
+                </select>
+            </div>
+            <div class="col-md-6 mb-3">
+                <label for="thalach" class="form-label">Maximum Heart Rate Achieved</label>
+                <input type="number" class="form-control" id="thalach" name="thalach" min="60" max="220"
+                    placeholder="e.g., 150" required>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6 mb-3">
+                <label for="exang" class="form-label">Exercise Induced Angina?</label>
+                <select class="form-select" id="exang" name="exang" required>
+                    <option value="" disabled selected>Select Yes/No</option>
+                    <option value="1">Yes</option>
+                    <option value="0">No</option>
+                </select>
+            </div>
+            <div class="col-md-6 mb-3">
+                <label for="oldpeak" class="form-label">ST Depression (Oldpeak)</label>
+                <input type="number" class="form-control" id="oldpeak" name="oldpeak" step="0.1" min="0" max="6.2"
+                    placeholder="e.g., 2.3" required>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6 mb-3">
+                <label for="slope" class="form-label">Slope of the Peak Exercise ST Segment</label>
+                <select class="form-select" id="slope" name="slope" required>
+                    <option value="" disabled selected>Select Slope</option>
+                    <option value="0">Upsloping</option>
+                    <option value="1">Flat</option>
+                    <option value="2">Downsloping</option>
+                </select>
+            </div>
+            <div class="col-md-6 mb-3">
+                <label for="ca" class="form-label">Number of Major Vessels (0-3) Colored by Fluoroscopy</label>
+                <select class="form-select" id="ca" name="ca" required>
+                    <option value="" disabled selected>Select Count</option>
+                    <option value="0">0</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="mb-3">
+            <label for="thal" class="form-label">Thalassemia (Thal)</label>
+            <select class="form-select" id="thal" name="thal" required>
+                <option value="" disabled selected>Select Type</option>
+                <option value="0">Normal</option>
+                <option value="1">Fixed defect</option>
+                <option value="2">Reversible defect</option>
+            </select>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Submit Medical Data</button>
+    </form>
+
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+        integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.min.js"
+        integrity="sha384-7qAoOXltbVP82dhxHAUje59V5r2YsVfBafyUDxEdApLPmcdhBPg1DKg1ERo0BZlK"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>

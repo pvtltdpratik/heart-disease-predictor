@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Register for an Account</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous">
+
+    <style>
+        body {
+            background-color: #f0f2f5;
+            /* A very light, calming grey-blue background */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            /* A more friendly font */
+        }
+
+        .register-card {
+            max-width: 500px;
+            /* Slightly wider for more fields */
+            width: 90%;
+            padding: 35px;
+            /* More generous padding */
+            border: none;
+            border-radius: 20px;
+            /* Even softer rounded corners */
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+            /* Deeper, softer shadow */
+            background-color: #ffffff;
+            /* Crisp white card background */
+            text-align: center;
+            overflow: hidden;
+            /* To handle any potential overflow from shadows/borders */
+        }
+
+        .register-card .card-title {
+            font-size: 2.5rem;
+            /* Larger, more inviting title */
+            font-weight: 700;
+            color: #4CAF50;
+            /* A soft, appealing green for the title */
+            margin-bottom: 35px;
+            letter-spacing: -0.5px;
+            /* Slightly tighter letter spacing */
+        }
+
+        .register-card .form-label {
+            font-weight: 600;
+            color: #5f6a7d;
+            /* A slightly darker, muted grey for labels */
+            text-align: left;
+            display: block;
+            margin-bottom: 8px;
+            font-size: 0.95rem;
+            /* Slightly smaller label font */
+        }
+
+        .register-card .form-control {
+            border-radius: 10px;
+            /* Rounded inputs */
+            padding: 14px 18px;
+            /* More padding for a comfortable input feel */
+            border: 1px solid #e0e6ed;
+            /* Very light, subtle border */
+            transition: all 0.3s ease;
+            font-size: 1rem;
+        }
+
+        .register-card .form-control:focus {
+            border-color: #88c9a3;
+            /* A softer green focus border */
+            box-shadow: 0 0 0 0.2rem rgba(76, 175, 80, 0.2);
+            /* Soft green shadow on focus */
+            outline: none;
+        }
+
+        .register-card .btn-primary {
+            background-color: #4CAF50;
+            /* Primary green button */
+            border-color: #4CAF50;
+            border-radius: 10px;
+            padding: 15px 30px;
+            /* Larger button */
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-top: 30px;
+            /* More space above button */
+            width: 100%;
+            transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.2s ease;
+            box-shadow: 0 5px 15px rgba(76, 175, 80, 0.3);
+            /* Subtle button shadow */
+        }
+
+        .register-card .btn-primary:hover {
+            background-color: #43A047;
+            /* Darker green on hover */
+            border-color: #43A047;
+            transform: translateY(-3px);
+            /* More pronounced lift on hover */
+            box-shadow: 0 8px 20px rgba(76, 175, 80, 0.4);
+            /* Enhanced shadow on hover */
+        }
+
+        .register-card a {
+            color: #4CAF50;
+            /* Matching green for the link */
+            text-decoration: none;
+            font-size: 0.95rem;
+            margin-top: 20px;
+            /* Space above the link */
+            display: inline-block;
+            transition: color 0.3s ease, text-decoration 0.3s ease;
+            font-weight: 600;
+            /* Bolder link text */
+        }
+
+        .register-card a:hover {
+            color: #43A047;
+            text-decoration: underline;
+        }
+
+        .mb-3 {
+            margin-bottom: 22px !important;
+            /* Consistent spacing between fields */
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <form class="card register-card" method="post" action="/api/api_register">
+        <h2 class="card-title text-center">Join Us!</h2>
+        <div class="mb-3">
+            <label for="username" class="form-label">Email address</label>
+            <input type="email" class="form-control" id="username" name="username" aria-describedby="emailHelp"
+                placeholder="your.email@example.com">
+        </div>
+        <div class="mb-3">
+            <label for="password" class="form-label">Password</label>
+            <input type="password" class="form-control" id="password" name="password" placeholder="••••••••">
+        </div>
+        <div class="mb-3">
+            <label for="confirm_password" class="form-label">Confirm Password</label>
+            <input type="password" class="form-control" id="confirm_password" name="confirm_password"
+                placeholder="••••••••">
+        </div>
+        <div class="mb-3">
+            <label for="name" class="form-label">Full Name</label>
+            <input type="text" class="form-control" id="name" name="name" placeholder="John Doe">
+        </div>
+        <div class="mb-3">
+            <label for="dob" class="form-label">Date of Birth</label>
+            <input type="date" class="form-control" id="dob" name="dob">
+        </div>
+        <div class="mb-3">
+            <label for="gender" class="form-label">Gender</label>
+            <input type="text" class="form-control" id="gender" name="gender"
+                placeholder="e.g., Male, Female, Non-binary">
+        </div>
+        <div class="mb-3">
+            <label for="phone" class="form-label">Phone Number</label>
+            <input type="text" class="form-control" id="phone" name="phone" placeholder="+91 98765 43210">
+        </div>
+        <div class="mb-3">
+            <label for="address" class="form-label">Address</label>
+            <input type="text" class="form-control" id="address" name="address"
+                placeholder="123 Main St, City, State, Zip">
+        </div>
+        <div>
+            Already have an account? <a href="/appentry">**Login here**</a>
+        </div>
+        <button type="submit" class="btn btn-primary">Create My Account</button>
+    </form>
+
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+        integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.min.js"
+        integrity="sha384-7qAoOXltbVP82dhxHAUje59V5r2YsVfBafyUDxEdApLPmcdhBPg1DKg1ERo0BZlK"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>
