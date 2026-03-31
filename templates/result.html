@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <title>Heart Disease Prediction Result</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      min-height: 100vh;
+      background: linear-gradient(135deg, #f0f4f8, #dfe6f0);
+      font-family: 'Segoe UI', sans-serif;
+      padding: 40px 16px;
+    }
+    .page-title {
+      text-align: center; margin-bottom: 30px;
+    }
+    .page-title h1 { font-size: 1.8rem; font-weight: 700; color: #2d3748; }
+    .page-title p  { color: #718096; font-size: 0.95rem; margin-top: 4px; }
+
+    /* ── Prediction Banner ── */
+    .prediction-banner {
+      border-radius: 20px; padding: 36px 30px;
+      text-align: center; color: white;
+      margin-bottom: 24px;
+      box-shadow: 0 8px 28px rgba(0,0,0,0.13);
+    }
+    .safe-banner { background: linear-gradient(135deg, #11998e, #38ef7d); }
+    .risk-banner { background: linear-gradient(135deg, #c0392b, #e74c3c); }
+    .prediction-banner .icon { font-size: 72px; margin-bottom: 12px; }
+    .prediction-banner h2 { font-size: 1.7rem; font-weight: 700; margin-bottom: 6px; }
+    .prediction-banner p  { font-size: 1rem; opacity: 0.92; }
+
+    /* ── Cards shared ── */
+    .section-card {
+      background: #fff; border-radius: 20px;
+      box-shadow: 0 6px 24px rgba(0,0,0,0.08);
+      padding: 28px 30px; margin-bottom: 24px;
+    }
+    .section-card h5 {
+      font-size: 1.05rem; font-weight: 700;
+      color: #2d3748; margin-bottom: 20px;
+      padding-bottom: 10px; border-bottom: 2px solid #edf2f7;
+    }
+
+    /* ── Input Summary Grid ── */
+    .summary-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+      gap: 14px;
+    }
+    .summary-item {
+      background: #f7fafc; border-radius: 12px;
+      padding: 14px 16px; text-align: center;
+    }
+    .summary-item .label {
+      font-size: 0.75rem; color: #a0aec0;
+      text-transform: uppercase; letter-spacing: 0.05em;
+      margin-bottom: 6px;
+    }
+    .summary-item .value {
+      font-size: 1.15rem; font-weight: 700; color: #2d3748;
+    }
+    .summary-item .unit {
+      font-size: 0.72rem; color: #718096; margin-top: 2px;
+    }
+
+    /* ── Health Tips ── */
+    .tip {
+      display: flex; gap: 14px; align-items: flex-start;
+      padding: 14px 16px; border-radius: 12px;
+      background: #f7fafc; margin-bottom: 12px;
+      transition: transform 0.15s;
+    }
+    .tip:hover { transform: translateX(5px); }
+    .tip-icon { font-size: 26px; flex-shrink: 0; margin-top: 2px; }
+    .tip-text strong { display: block; font-size: 0.95rem; color: #2d3748; margin-bottom: 3px; }
+    .tip-text span   { font-size: 0.87rem; color: #718096; }
+
+    /* ── Footer ── */
+    .footer-actions { text-align: center; margin-top: 10px; }
+    .btn-dashboard {
+      display: inline-block; padding: 13px 36px;
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      color: white; border-radius: 12px; text-decoration: none;
+      font-weight: 600; font-size: 0.95rem;
+      box-shadow: 0 4px 14px rgba(102,126,234,0.4);
+      transition: opacity 0.2s;
+    }
+    .btn-dashboard:hover { opacity: 0.88; color: white; }
+  </style>
+</head>
+<body>
+
+{% set is_safe = result.prediction == "No Heart Disease" %}
+
+<div style="max-width: 720px; margin: 0 auto;">
+
+  <!-- ── Page Title ── -->
+  <div class="page-title">
+    <h1>❤️ Heart Disease Prediction Report</h1>
+    <p>Here's a full summary of your inputs, prediction, and personalised health tips.</p>
+  </div>
+
+  <!-- ── 1. Prediction Banner ── -->
+  <div class="prediction-banner {{ 'safe-banner' if is_safe else 'risk-banner' }}">
+    <div class="icon">{{ '💚' if is_safe else '❤️‍🩹' }}</div>
+    <h2>{{ 'No Heart Disease Detected' if is_safe else 'Heart Disease Risk Detected' }}</h2>
+    <p>{{ 'Your results look healthy — keep it up!' if is_safe else 'Please consult a cardiologist as soon as possible.' }}</p>
+  </div>
+
+  <!-- ── 2. Input Summary ── -->
+  <div class="section-card">
+    <h5>📋 Your Input Summary</h5>
+    <div class="summary-grid">
+
+      <div class="summary-item">
+        <div class="label">Age</div>
+        <div class="value">{{ age }}</div>
+        <div class="unit">years</div>
+      </div>
+
+      <div class="summary-item">
+        <div class="label">Gender</div>
+        <div class="value">{{ 'Male' if gender == '1' else 'Female' }}</div>
+        <div class="unit">&nbsp;</div>
+      </div>
+
+      <div class="summary-item">
+        <div class="label">Chest Pain</div>
+        <div class="value">
+          {% if cp == '1' %}Typical
+          {% elif cp == '2' %}Atypical
+          {% elif cp == '3' %}Non-anginal
+          {% else %}Asymptomatic{% endif %}
+        </div>
+        <div class="unit">type</div>
+      </div>
+
+      <div class="summary-item">
+        <div class="label">Resting BP</div>
+        <div class="value">{{ trestbps }}</div>
+        <div class="unit">mm Hg</div>
+      </div>
+
+      <div class="summary-item">
+        <div class="label">Cholesterol</div>
+        <div class="value">{{ chol }}</div>
+        <div class="unit">mg/dl</div>
+      </div>
+
+      <div class="summary-item">
+        <div class="label">Fasting BS</div>
+        <div class="value">{{ '> 120' if fbs == '1' else '≤ 120' }}</div>
+        <div class="unit">mg/dl</div>
+      </div>
+
+      <div class="summary-item">
+        <div class="label">Rest ECG</div>
+        <div class="value">
+          {% if restecg == '0' %}Normal
+          {% elif restecg == '1' %}ST-T Wave
+          {% else %}LV Hypertrophy{% endif %}
+        </div>
+        <div class="unit">&nbsp;</div>
+      </div>
+
+      <div class="summary-item">
+        <div class="label">Max Heart Rate</div>
+        <div class="value">{{ thalach }}</div>
+        <div class="unit">bpm</div>
+      </div>
+
+      <div class="summary-item">
+        <div class="label">Exercise Angina</div>
+        <div class="value">{{ 'Yes' if exang == '1' else 'No' }}</div>
+        <div class="unit">&nbsp;</div>
+      </div>
+
+      <div class="summary-item">
+        <div class="label">ST Depression</div>
+        <div class="value">{{ oldpeak }}</div>
+        <div class="unit">oldpeak</div>
+      </div>
+
+      <div class="summary-item">
+        <div class="label">ST Slope</div>
+        <div class="value">
+          {% if slope == '1' %}Upsloping
+          {% elif slope == '2' %}Flat
+          {% else %}Downsloping{% endif %}
+        </div>
+        <div class="unit">&nbsp;</div>
+      </div>
+
+      <div class="summary-item">
+        <div class="label">Major Vessels</div>
+        <div class="value">{{ ca }}</div>
+        <div class="unit">coloured</div>
+      </div>
+
+      <div class="summary-item">
+        <div class="label">Thalassemia</div>
+        <div class="value">
+          {% if thal == '3' %}Normal
+          {% elif thal == '6' %}Fixed Defect
+          {% else %}Reversable{% endif %}
+        </div>
+        <div class="unit">&nbsp;</div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ── 3. Health Tips ── -->
+  <div class="section-card">
+    <h5>🩺 Personalised Health Tips</h5>
+
+    {% if is_safe %}
+
+      <div class="tip">
+        <span class="tip-icon">🥗</span>
+        <div class="tip-text">
+          <strong>Maintain a Balanced Diet</strong>
+          <span>Keep eating heart-healthy foods — fruits, vegetables, whole grains, and lean proteins.</span>
+        </div>
+      </div>
+      <div class="tip">
+        <span class="tip-icon">🏃</span>
+        <div class="tip-text">
+          <strong>Stay Physically Active</strong>
+          <span>Aim for at least 30 minutes of moderate exercise 5 days a week to keep your heart strong.</span>
+        </div>
+      </div>
+      <div class="tip">
+        <span class="tip-icon">😴</span>
+        <div class="tip-text">
+          <strong>Prioritise Quality Sleep</strong>
+          <span>7–9 hours of restful sleep every night directly supports long-term cardiovascular health.</span>
+        </div>
+      </div>
+      <div class="tip">
+        <span class="tip-icon">🚰</span>
+        <div class="tip-text">
+          <strong>Stay Well Hydrated</strong>
+          <span>Drink at least 8 glasses of water daily to support circulation and heart function.</span>
+        </div>
+      </div>
+      <div class="tip">
+        <span class="tip-icon">📅</span>
+        <div class="tip-text">
+          <strong>Regular Health Check-ups</strong>
+          <span>Annual screenings help catch any changes early and keep you ahead of risk factors.</span>
+        </div>
+      </div>
+
+    {% else %}
+
+      <div class="tip">
+        <span class="tip-icon">🏥</span>
+        <div class="tip-text">
+          <strong>See a Doctor Immediately</strong>
+          <span>Schedule an appointment with a cardiologist without delay — early intervention saves lives.</span>
+        </div>
+      </div>
+      <div class="tip">
+        <span class="tip-icon">🚭</span>
+        <div class="tip-text">
+          <strong>Quit Smoking & Limit Alcohol</strong>
+          <span>Both habits significantly worsen heart conditions and increase risk of cardiac events.</span>
+        </div>
+      </div>
+      <div class="tip">
+        <span class="tip-icon">🥦</span>
+        <div class="tip-text">
+          <strong>Switch to a Heart-Healthy Diet</strong>
+          <span>Cut salt, saturated fats, and processed foods. Add fibre-rich foods and omega-3 sources.</span>
+        </div>
+      </div>
+      <div class="tip">
+        <span class="tip-icon">💊</span>
+        <div class="tip-text">
+          <strong>Follow Medical Advice Strictly</strong>
+          <span>Take all prescribed medications on time and never skip doses or attempt to self-medicate.</span>
+        </div>
+      </div>
+      <div class="tip">
+        <span class="tip-icon">🧘</span>
+        <div class="tip-text">
+          <strong>Manage Stress Actively</strong>
+          <span>Chronic stress strains your heart. Try meditation, deep breathing, or light yoga daily.</span>
+        </div>
+      </div>
+      <div class="tip">
+        <span class="tip-icon">⚖️</span>
+        <div class="tip-text">
+          <strong>Maintain a Healthy Weight</strong>
+          <span>Even modest weight loss can significantly reduce pressure on your heart and arteries.</span>
+        </div>
+      </div>
+
+    {% endif %}
+  </div>
+
+  <!-- ── Footer ── -->
+  <div class="footer-actions">
+    <a href="/dashboard" class="btn-dashboard">🔙 Back to Dashboard</a>
+  </div>
+
+</div>
+</body>
+</html>

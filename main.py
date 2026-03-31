@@ -1,3 +1,5 @@
+from unittest import result
+
 from flask import Flask, render_template, request, flash, session, jsonify
 from pymongo import MongoClient
 from ucimlrepo import fetch_ucirepo 
@@ -14,7 +16,7 @@ heart_disease = dataset.data.original
 app = Flask(__name__)
 logging.basicConfig(level=logging.INFO)
 app.secret_key = 'kolhe'
-client = MongoClient("mongodb+srv://pratik:LSMt1jebHWuPEB0m@cluster0.kzexw.mongodb.net/")
+client = MongoClient("mongodb+srv://pratikolhe1812_db_user:pratikolhe@cluster0.snhshb4.mongodb.net/")
 db = client['patients']
 
 # Make this a utility function, not an API route
@@ -84,7 +86,7 @@ def data_processing(age, sex, cp, trestbps, chol, fbs, restecg,
 def home():
     print(heart_disease.isnull().sum())
     # heart_disease.to_csv('heart_disease.csv', index=False)
-    return render_template('index.html')
+    return render_template('login.html')
 
 @app.route('/appentry')
 def appentry():
@@ -106,23 +108,29 @@ def register():
 @app.route('/api/predict_api', methods=['POST'])
 def predict_api():
     if request.method == 'POST':
-        # Get form data
-        age = request.form.get('age')
-        gender = request.form.get('gender')  # 'gender' is assumed to be numeric (0 or 1)
-        cp = request.form.get('cp')
+        age      = request.form.get('age')
+        gender   = request.form.get('gender')
+        cp       = request.form.get('cp')
         trestbps = request.form.get('trestbps')
-        chol = request.form.get('chol')
-        fbs = request.form.get('fbs')
-        restecg = request.form.get('restecg')
-        thalach = request.form.get('thalach')
-        exang = request.form.get('exang')
-        oldpeak = request.form.get('oldpeak')
-        slope = request.form.get('slope')
-        ca = request.form.get('ca')
-        thal = request.form.get('thal')
-        app.logger.info("Received data: %s", [age, gender, cp, trestbps, chol, fbs, restecg, thalach, exang, oldpeak, slope, ca, thal])
-        result = data_processing(age, gender, cp, trestbps, chol, fbs, restecg, thalach, exang, oldpeak, slope, ca, thal)
-        return jsonify(result)
+        chol     = request.form.get('chol')
+        fbs      = request.form.get('fbs')
+        restecg  = request.form.get('restecg')
+        thalach  = request.form.get('thalach')
+        exang    = request.form.get('exang')
+        oldpeak  = request.form.get('oldpeak')
+        slope    = request.form.get('slope')
+        ca       = request.form.get('ca')
+        thal     = request.form.get('thal')
+
+        result = data_processing(age, gender, cp, trestbps, chol, fbs,
+                                 restecg, thalach, exang, oldpeak, slope, ca, thal)
+
+        # ✅ Pass ALL inputs so the summary can render them
+        return render_template('result.html', result=result,
+                               age=age, gender=gender, cp=cp,
+                               trestbps=trestbps, chol=chol, fbs=fbs,
+                               restecg=restecg, thalach=thalach, exang=exang,
+                               oldpeak=oldpeak, slope=slope, ca=ca, thal=thal)
 
 @app.route('/api/api_register', methods=['GET', 'POST'])
 def api_register():
