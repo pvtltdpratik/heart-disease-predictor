@@ -19,7 +19,8 @@ app.secret_key = 'kolhe'
 client = MongoClient("mongodb+srv://pratikolhe1812_db_user:pratikolhe@cluster0.snhshb4.mongodb.net/")
 db = client['patients']
 
-# Make this a utility function, not an API route
+
+#utility function, not an API route
 def data_processing(age, sex, cp, trestbps, chol, fbs, restecg,
                     thalach, exang, oldpeak, slope, ca, thal):
     app.logger.info("Processing input data...")
@@ -169,5 +170,5 @@ def login():
                 return render_template('login.html')
 # Press the green button in the gutter to run the script.
 if __name__ == '__main__':
-    app.run(host='0.0.0.0',debug=True)
+    app.run(host='0.0.0.0', port=8080 ,debug=True)
 # See PyCharm help at https://www.jetbrains.com/help/pycharm/
